@@ -11,6 +11,7 @@
 |
  */
 
+ /* #region Checking route */
 // Route::get('/', function () {
 
 //     return view('welcome')->with([
@@ -65,6 +66,8 @@ Route::resource('projects', 'ProjectsController');
 
  */
 
+/* #endregion */
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -83,3 +86,4 @@ Route::delete('/completed-tasks/{task}','CompletedTaskController@destroy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
