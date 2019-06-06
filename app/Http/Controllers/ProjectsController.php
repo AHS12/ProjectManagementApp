@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ProjectWasCreated;
 use Illuminate\Http\Request;
 use \App\Project;
 
