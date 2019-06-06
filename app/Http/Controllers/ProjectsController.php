@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ProjectCreated;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use \App\Project;
 
 class ProjectsController extends Controller
@@ -54,7 +52,7 @@ class ProjectsController extends Controller
 
     public function store()
     {
-
+        /* #region Ways of creating a Project */
         // $project = new Project();
 
         // $project->title = request('title');
@@ -67,17 +65,23 @@ class ProjectsController extends Controller
         //     'description' => request('description')
         // ]);
 
+        // Project::create(request(['title','description']));
+
+        /* #endregion */
+
+        /* #region Sending a mail when a project is created..but there are better ways */
+        //  $project = Project::create($validatedProject);
+        //  Mail::to($project->user->email)->send(new ProjectCreated($project));
+
+        /* #endregion*/
+
         $validatedProject = $this->vaildateProject();
 
         $validatedProject['user_id'] = auth()->id();
 
-        // Project::create(request(['title','description']));
-        $project = Project::create($validatedProject);
-        \Mail::to("ahslucky12@gmail.com")->send(new ProjectCreated($project));
+        Project::create($validatedProject);
 
         return redirect('/projects');
-
-        //return request()->all();
     }
 
     public function edit(Project $project) //example.com/projects/1/edit
@@ -120,7 +124,8 @@ class ProjectsController extends Controller
         return redirect('/projects');
     }
 
-    protected function vaildateProject() {
+    protected function vaildateProject()
+    {
         return request()->validate([
             'title' => ['required', 'min:3', 'max:255'],
             'description' => ['required', 'min:3'],
