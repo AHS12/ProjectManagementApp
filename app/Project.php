@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Mail\ProjectCreated;
 use Illuminate\Support\Facades\Mail;
+use App\Events\ProjectWasCreated;
 
 class Project extends Model
 {
@@ -16,21 +17,29 @@ class Project extends Model
     //i know what i am doing :3
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
+     /* #region email eloquent model hook */
 
-        /* #region email */
-         /*------------------------------------------------- Send Email Model hookes -----
-         |this mail will be sent after the project is created
-         |so the event will fire after the creation of project
-         *-------------------------------------------------------------------*/
-        /* #endregion */
-        static::created(function ($project) {
-            Mail::to($project->user->email)->send(new ProjectCreated($project));
-        });
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
+
+    //      /*------------- Send Email Eloquent Model hookes ------------------
+    //      |this mail will be sent after the project is created
+    //      |so the created event will fire after the creation of project
+    //      *-------------------------------------------------------------------*/
+
+    //     static::created(function ($project) {
+    //         Mail::to($project->user->email)->send(new ProjectCreated($project));
+    //     });
+    // }
+    /* #endregion */
+
+    /* #region Auto fire custom event using eloquent */
+    protected $dispatchesEvents = [
+        'created' => ProjectWasCreated::class
+    ];
+    /* #endregion */
     public function user()
     {
         return $this->belongsTo(User::class);

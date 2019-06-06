@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProjectWasCreated;
 use Illuminate\Http\Request;
 use \App\Project;
 
@@ -14,11 +15,19 @@ class ProjectsController extends Controller
     public function index()
     {
 
-        // $projects = \App\Project::all();
+        /*-------- fetching all -----
+        | $projects = \App\Project::all();
+         *-------------------------------------------------------------------*/
+        /* #region api response */
         //for api response
         // //return $projects;
         // dump($projects);
-        //$projects = Project::where('user_id', auth()->id())->get();
+        /* #endregion */
+
+        /*-------- Without Eloquent -----
+        | $projects = Project::where('user_id', auth()->id())->get();
+         *-------------------------------------------------------------------*/
+
         $projects = auth()->user()->projects;
 
         return view('projects/index', compact('projects'));
@@ -26,20 +35,27 @@ class ProjectsController extends Controller
 
     public function show(Project $project)
     {
+        /* #region old way */
         /*
         no need cuz of model view binding
         $project = Project::findOrFail($id);
          */
+        /* #endregion */
+
+        // with standered way
         // abort_unless(auth()->user()->owns($project), 403);
 
         //from now on this are the policy
         $this->authorize('view', $project);
 
+        /* #region using Gate */
         //   if(\Gate::denies('view',$project)){
         //       abort(403);
         //   }
 
         //   abort_if(\Gate::denies('view',$project),403);
+
+        /* #endregion */
 
         return view('/projects/show', compact('project'));
     }
@@ -69,7 +85,7 @@ class ProjectsController extends Controller
 
         /* #endregion */
 
-        /* #region Sending a mail when a project is created..but there are better ways */
+        /* #region Sending a mail directly from controller..but there are better ways */
         //  $project = Project::create($validatedProject);
         //  Mail::to($project->user->email)->send(new ProjectCreated($project));
 
@@ -81,13 +97,24 @@ class ProjectsController extends Controller
 
         Project::create($validatedProject);
 
+        /* #region firing Custom event from controller */
+        //either we fire our custom event in here controller or use the eloquent model auto fire event :3
+        // $project = Project::create($validatedProject);
+        // event(new ProjectWasCreated($project));
+
+        /* #endregion */
+
         return redirect('/projects');
     }
 
     public function edit(Project $project) //example.com/projects/1/edit
 
     {
-        // $project = Project::findOrFail($id);
+        /* #region old system */
+        /*----------------- Dont need since we are using route model binding -----
+        | $project = Project::findOrFail($id);
+         *-------------------------------------------------------------------*/
+        /* #endregion */
 
         //authorize user
         $this->authorize('view', $project);
@@ -96,30 +123,41 @@ class ProjectsController extends Controller
 
     public function update(Project $project)
     {
-        // $project = Project::findOrFail($id);
-        // $project->title = request('title');
-        // $project->description = request('description');
-        // $project->save();
+        /* #region Old way */
+        /*--------------------Other way of update ---------------------------
+        |$project = Project::findOrFail($id);
+        |$project->title = request('title');
+        |$project->description = request('description');
+        |$project->save();
+         *-------------------------------------------------------------------*/
+        /* #endregion */
 
         //authorize user
         $this->authorize('view', $project);
 
-        // $validatedProject = request()->validate([
-        //     'title' => ['required', 'min:3', 'max:255'],
-        //     'description' => ['required', 'min:3'],
-        // ]);
-        // $project->update($validatedProject);
+        /* #region update */
+        /*--------------------update without validatProject function ---------------------------
+        |$validatedProject = request()->validate([
+        |  'title' => ['required', 'min:3', 'max:255'],
+        |  'description' => ['required', 'min:3'],
+        | ]);
+        | $project->update($validatedProject);
+         *-------------------------------------------------------------------*/
+        /* #endregion */
 
         $project->update($this->vaildateProject());
 
         return redirect('/projects');
-        // dd(request()->all());
     }
 
     public function destroy(Project $project)
     {
-        //dd('Hello i am called');
-        // $project = Project::findOrFail($id)->delete();
+        /* #region Old way */
+        /*--------------------Other way of destroy ---------------------------
+        |$project = Project::findOrFail($id)->delete();
+         *-------------------------------------------------------------------*/
+        /* #endregion */
+
         $project->delete();
         return redirect('/projects');
     }
