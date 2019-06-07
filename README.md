@@ -15,3 +15,5 @@ Basic Custom Events and Listener
 Basic Flash Message System
 
 Basic Autoload Helper Function
+
+Jquery DataTable

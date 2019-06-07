@@ -91,7 +91,6 @@ class ProjectsController extends Controller
         /* #endregion*/
 
         $validatedProject = $this->vaildateProject();
-
         $validatedProject['user_id'] = auth()->id();
 
         Project::create($validatedProject);
@@ -171,8 +170,10 @@ class ProjectsController extends Controller
         ]);
     }
 
+    /* #region Should use Autoload helper */
     //we should use them in helper file
     // protected function flashMsg($msg){
     //    return session()->flash('message', $msg);
     // }
+    /* #endregion */
 }

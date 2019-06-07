@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.master')
 
 
 @section('content')
@@ -17,7 +17,7 @@
 @endif
 
 <b>Projects</b>
-<table class="table table-sm table-hover table-bordered">
+<table id="datatable" class="table table-sm table-hover table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th scope="col">Title</th>
@@ -52,5 +52,4 @@
 
     </tbody>
 </table>
-
 @endsection
