@@ -93,7 +93,7 @@
 
     </div>
 
-    <footer class="footer mt-auto py-3">
+    <footer class="footer mt-auto py-3 fixed-bottom text-center">
         <div class="container">
             <span class="text-muted">ProjectManagementApp All right Preserved.
                 <a href="https://github.com/AHS12/ProjectManagementApp" target="_blank">Sourec Code is here</a>
