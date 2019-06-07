@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ProjectCreated extends Mailable
 {
@@ -16,10 +15,14 @@ class ProjectCreated extends Mailable
      *
      * @return void
      */
+
+    /*-------- Notice -----
+    | Any public vairable we declare here can be accessed directly to the maile blade tamplate
+     *-------------------------------------------------------------------*/
     public $project;
     public function __construct($project)
     {
-        $this->project=$project;
+        $this->project = $project;
     }
 
     /**

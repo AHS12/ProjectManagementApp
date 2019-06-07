@@ -38,6 +38,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /*----------------------- Logout -------------
+         |  we override the loggedout function to change the
+         |  funtionality of the defaults..for example the redirect path
+         *-------------------------------------------------------------------*/
+
     protected function loggedOut(Request $request) {
         $this->guard()->logout();
         $request->session()->flush();

@@ -103,6 +103,8 @@ class ProjectsController extends Controller
 
         /* #endregion */
 
+        //Sending a flash msg via session
+        flashMsg('Your Project Has Been Created!!');
         return redirect('/projects');
     }
 
@@ -168,4 +170,9 @@ class ProjectsController extends Controller
             'description' => ['required', 'min:3'],
         ]);
     }
+
+    //we should use them in helper file
+    // protected function flashMsg($msg){
+    //    return session()->flash('message', $msg);
+    // }
 }

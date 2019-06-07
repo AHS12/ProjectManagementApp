@@ -28,7 +28,7 @@ class SendProjectCreatedNotification
      */
     public function handle(ProjectWasCreated $event)
     {
-        //
-        Mail::to($event->project->user->email)->send(new ProjectCreated($event->project));
+        //using queue insteade of send for improving performance
+        Mail::to($event->project->user->email)->queue(new ProjectCreated($event->project));
     }
 }
