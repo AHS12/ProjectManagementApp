@@ -6,12 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    {{-- #region all failed attempt --}}
     {{-- <link rel="stylesheet" href="{{ asset('css.helper.css') }}"> --}}
     {{-- <link href="{{URL:: asset('public/css/helper.css') }}" rel="stylesheet" type="text/css"> --}}
-
     {{-- {!! Html::style('css/helper.css') !!} --}}
 
     {{-- <link rel="stylesheet" type="text/css" href="public/css/helper.css"> --}}
+    {{-- #endregion --}}
+
+    {{-- Working CDN --}}
+    {{-- <link rel="stylesheet" href="https://ahs12.000webhostapp.com/MyCDN/helper.css"> --}}
+
+
+    {{-- WE MUST PUT CSS UNDER PUBLIC FOLDER NOT RESOURCE FOLDER --}}
+    <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
+
+
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -34,7 +44,7 @@
             text-decoration: line-through;
         }
     </style> --}}
-    <link rel="stylesheet" href="https://ahs12.000webhostapp.com/MyCDN/helper.css">
+
 
     <title>@yield('title','ProjectManagementApp')</title>
 
